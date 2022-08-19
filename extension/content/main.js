@@ -815,6 +815,33 @@ const changeLatestTweets = (latestTweets) => {
   }
 };
 
+const changeNotifications = (notificationCount) => {
+  changeBubbleNotifications(notificationCount);
+  changeTitleNotifications(notificationCount);
+}
+
+// Function to change bubble notification counts
+const changeBubbleNotifications = (notificationCounts) => {
+  switch (notificationCounts) {
+    case "off":
+      addStyles(
+        "mt-notificationCount",
+        `
+        [href$="/notifications"] [aria-live="polite"], 
+        [data-testid="UserCell"] [aria-live="polite"],
+        [aria-label="undefined unread items"] {
+          display: none !important;
+        }
+        `
+      );
+      break;
+
+    case "on":
+      removeElement("mt-notificationCount");
+      break;
+  }
+};
+
 // Function to change the title notification count
 const changeTitleNotifications = (titleNotifications) => {
   if (titleNotifications === "off") {
@@ -882,7 +909,7 @@ const constructNewData = (changes) => {
   - 21. Who to Follow
   - 22. Topics to Follow
   - 23. Always Show Latest Tweets
-  - 24. Hide Title Notifications
+  - 24. Hide Notification Count
 --*/
 const injectAllChanges = (data) => {
   const {
@@ -909,7 +936,7 @@ const injectAllChanges = (data) => {
     whoToFollow,
     topicsToFollow,
     latestTweets,
-    titleNotifications
+    notificationCount
   } = data;
   changeFeedWidth(feedWidth);
   changefeedBorders(feedBorders);
@@ -934,7 +961,7 @@ const injectAllChanges = (data) => {
   changeWhoToFollow(whoToFollow);
   changeTopicsToFollow(topicsToFollow);
   changeLatestTweets(latestTweets);
-  changeTitleNotifications(titleNotifications);
+  changeNotifications(notificationCount);
 };
 
 /*--
@@ -983,7 +1010,7 @@ const init = () => {
       "whoToFollow",
       "topicsToFollow",
       "latestTweets",
-      "titleNotifications"
+      "notificationCount"
     ],
     (data) => {
       injectAllChanges(data);

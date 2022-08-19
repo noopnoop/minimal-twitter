@@ -529,13 +529,13 @@ export const CheckboxAlwaysShowLatest = () => {
   )
 }
 
-export const CheckboxHideTitleNotifications = () => {
+export const CheckboxHideNotificationCount = () => {
   const [userTitle, setUserTitle] = useState(false)
 
   useEffect(() => {
     const getUserDefaultTitle = async () => {
       try {
-        const userDefaultTitle = await getStorage("titleNotifications")
+        const userDefaultTitle = await getStorage("notificationCount")
         userDefaultTitle &&
           setUserTitle(userDefaultTitle === "off" ? true : false)
       } catch (error) {
@@ -548,8 +548,8 @@ export const CheckboxHideTitleNotifications = () => {
 
   return (
     <div className="flex items-center justify-between w-full py-1">
-      <label htmlFor="titleNotifications" className="text-base tracking-normal">
-        Hide Title Notification Count
+      <label htmlFor="notificationCount" className="text-base tracking-normal">
+        Hide Notification Counts
       </label>
       <div className="grid rounded-full cursor-pointer w-9 h-9 place-items-center hover:bg-twitterAccentFour">
         <StyledCheckbox
@@ -557,14 +557,14 @@ export const CheckboxHideTitleNotifications = () => {
             setUserTitle(checked)
             try {
               await setStorage({
-                titleNotifications: checked ? "off" : "on"
+                notificationCount: checked ? "off" : "on"
               })
             } catch (error) {
               console.warn(error)
             }
           }}
           checked={userTitle}
-          id="titleNotifications"
+          id="notificationCount"
           className="flex items-center justify-center w-5 h-5 rounded-[4px] bg-twitterAccentThree"
         >
           <CheckboxPrimitive.Indicator className="text-white">

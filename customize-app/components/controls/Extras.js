@@ -16,7 +16,8 @@ import {
   CheckboxWhoToFollow,
   CheckboxTopicsToFollow,
   CheckboxAlwaysShowLatest,
-  CheckboxHideTitleNotifications
+  CheckboxHideTitleNotifications,
+  CheckboxHideNotificationCount
 } from "./ExtrasCheckboxes"
 import { SwitchZenMode } from "./ExtrasSwitches"
 import Separator from "./Separator"
@@ -195,7 +196,7 @@ const Extras = () => {
           <CheckboxWhoToFollow />
           <CheckboxTopicsToFollow />
           <CheckboxAlwaysShowLatest />
-          <CheckboxHideTitleNotifications />
+          <CheckboxHideNotificationCount />
           <div className="pb-3" />
           <Separator />
           <div className="flex items-center w-full pt-4 space-x-1 text-sm">
