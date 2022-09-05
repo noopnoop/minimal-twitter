@@ -515,7 +515,7 @@ const changeReplyCount = (replyCount) => {
         "mt-replyCount",
         `
         article [data-testid="reply"] span { 
-          visibility: hidden !important
+          display: none !important;
         }
         `
       );
@@ -538,7 +538,7 @@ const changeRetweetCount = (retweetCount) => {
         article [href$="/retweets/with_comments"],
         article [data-testid="retweet"] span,
         article [data-testid="unretweet"] span {
-          visibility: hidden !important
+          display: none !important;
         }
         `
       );
@@ -560,7 +560,7 @@ const changeLikeCount = (likeCount) => {
         article [href$="/likes"][href*="/status/"],
         article [data-testid="like"] span,
         article [data-testid="unlike"] span {
-           visibility: hidden !important
+          display: none !important;
         }
         `
       );
@@ -824,12 +824,18 @@ const changeNotifications = (notificationCount) => {
 const changeBubbleNotifications = (notificationCounts) => {
   switch (notificationCounts) {
     case "off":
+      // hack in here to get rid of all vanity counts when
+      // you are looking at an image.
       addStyles(
         "mt-notificationCount",
         `
         [href$="/notifications"] [aria-live="polite"], 
         [data-testid="UserCell"] [aria-live="polite"],
         [aria-label="undefined unread items"] {
+          display: none !important;
+        }
+        
+        [data-testid="app-text-transition-container"] {
           display: none !important;
         }
         `
