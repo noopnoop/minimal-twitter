@@ -6,6 +6,7 @@ import {
   CheckboxHideLikeCount,
   CheckboxHideReplyCount,
   CheckboxHideRetweetCount,
+  CheckboxHideViewCount,
   CheckboxHideVanityCount
 } from "./VanityCheckboxes"
 import Separator from "./Separator"
@@ -15,6 +16,7 @@ const Interface = () => {
   const [showVanityCheckboxes, setShowVanityCheckboxes] = useState(false)
 
   const [hideAll, setHideAll] = useState(false)
+  const [hideView, setHideView] = useState(false)
   const [hideReply, setHideReply] = useState(false)
   const [hideRetweet, setHideRetweet] = useState(false)
   const [hideLike, setHideLike] = useState(false)
@@ -67,12 +69,22 @@ const Interface = () => {
         console.warn(error)
       }
     }
+    const getUserDefaultView = async () => {
+      try {
+        const userDefaultView = await getStorage("viewCount")
+        userDefaultView &&
+          setHideView(userDefaultView === "hide" ? true : false)
+      } catch (error) {
+        console.warn(error)
+      }
+    }
 
     getUserDefaultAll()
     getUserDefaultReply()
     getUserDefaultLike()
     getUserDefaultRetweet()
     getUserDefaultFollow()
+    getUserDefaultView()
   }, [])
 
   const onCheckedChange = async (type, checked) => {
@@ -83,13 +95,15 @@ const Interface = () => {
         setHideRetweet(checked)
         setHideLike(checked)
         setHideFollow(checked)
+        setHideView(checked)
         try {
           await setStorage({
             allVanity: checked ? "hide" : "show",
             replyCount: checked ? "hide" : "show",
             retweetCount: checked ? "hide" : "show",
             likeCount: checked ? "hide" : "show",
-            followCount: checked ? "hide" : "show"
+            followCount: checked ? "hide" : "show",
+            viewCount: checked ? "hide" : "show"
           })
         } catch (error) {
           console.warn(error)
@@ -134,6 +148,17 @@ const Interface = () => {
         try {
           await setStorage({
             followCount: checked ? "hide" : "show"
+          })
+        } catch (error) {
+          console.warn(error)
+        }
+        break
+
+      case "view":
+        setHideFollow(checked)
+        try {
+          await setStorage({
+            viewCount: checked ? "hide" : "show"
           })
         } catch (error) {
           console.warn(error)
@@ -185,6 +210,10 @@ const Interface = () => {
             <CheckboxHideFollowCount
               onCheckedChange={onCheckedChange}
               hideFollow={hideFollow}
+            />
+            <CheckboxHideViewCount
+              onCheckedChange={onCheckedChange}
+              hideView={hideView}
             />
           </>
         )}

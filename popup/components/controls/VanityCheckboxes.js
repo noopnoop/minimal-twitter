@@ -150,3 +150,25 @@ export const CheckboxHideFollowCount = ({ onCheckedChange, hideFollow }) => {
     </div>
   )
 }
+
+export const CheckboxHideViewCount = ({ onCheckedChange, hideView }) => {
+  return (
+    <div className="flex items-center justify-between w-full py-1 pl-4">
+      <label htmlFor="hideViewCount" className="text-base">
+        Hide view count
+      </label>
+      <div className="grid rounded-full cursor-pointer w-9 h-9 place-items-center hover:bg-twitterAccentFour">
+        <StyledCheckbox
+          onCheckedChange={(checked) => onCheckedChange("view", checked)}
+          checked={hideView}
+          id="hideViewCount"
+          className="flex items-center justify-center w-5 h-5 rounded-[4px] bg-twitterAccentThree"
+        >
+          <CheckboxPrimitive.Indicator className="text-white">
+            <CheckIcon />
+          </CheckboxPrimitive.Indicator>
+        </StyledCheckbox>
+      </div>
+    </div>
+  )
+}
